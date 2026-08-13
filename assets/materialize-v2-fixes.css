@@ -1,0 +1,62 @@
+/*
+ * materialize-v2-fixes.css
+ *
+ * Workarounds for confirmed upstream defects in @materializecss/materialize
+ * 2.3.3. Load AFTER materialize.css.
+ *
+ * Re-check each block when upgrading — remove any that upstream has fixed.
+ */
+
+/* ------------------------------------------------------------------
+ * 1. Checkbox / radio label text sits flush against the box.
+ *
+ * components/checkbox/_checkboxes.scss wraps its label-spacing rules in a
+ * block comment that opens at line 89 and is never reopened, so the
+ * `+ span:not(.lever) { padding-left: var(--checkbox-size) }` rule never
+ * compiles. The stray `/*` even survives into dist/css/materialize.css.
+ *
+ * The input draws the box itself via :before/:after with appearance:none
+ * and margin:0, so the adjacent span needs its own offset.
+ *
+ * CHECKBOX ONLY. Radio uses the opposite construction — the input is
+ * hidden (position:absolute; opacity:0) and the *span* draws the circle
+ * via :before/:after, already carrying `padding-left: 35px`
+ * (components/radio-button/_radio-buttons.scss:11). Including
+ * [type=radio] here would override that 35px and make the circle
+ * overlap the label text.
+ * ------------------------------------------------------------------ */
+input[type='checkbox'] + span:not(.lever) {
+  padding-left: 8px;
+}
+
+/* ------------------------------------------------------------------
+ * 2. The chips text input renders as a full-width bordered field.
+ *
+ * components/chip/chips.css misspells the selector as `.chis` instead of
+ * `.chips` (dist/css/materialize.css lines 4359 and 4379), so the input
+ * never gets its chip styling and falls back to Materialize's global
+ * input rules. Reproduced below with the intended selector.
+ *
+ * Only relevant when Chips is initialized with `allowUserInput: true`.
+ * ------------------------------------------------------------------ */
+.chips input:not([type]):not(.browser-default).input {
+  background: none;
+  border: 0;
+  box-shadow: none;
+  color: var(--md-sys-color-on-background);
+  display: inline-block;
+  font-size: 16px;
+  height: 32px;
+  margin: 0;
+  outline: 0;
+  padding: 0;
+  width: -moz-fit-content;
+  width: fit-content;
+  min-width: 100px;
+  max-width: 200px;
+}
+
+.chips input:not([type]):not(.browser-default).input:focus {
+  border: 0;
+  box-shadow: none;
+}
