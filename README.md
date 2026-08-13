@@ -6,17 +6,32 @@ Most Materialize material online documents **v1.0.0** — the jQuery era. v2 cha
 
 ## Install
 
+Clone straight into your skills directory:
+
 ```bash
-git clone https://github.com/<you>/materializecss-skill.git ~/.claude/skills/materializecss
+git clone https://github.com/kekefreedog/sKill_materializecss.git ~/.claude/skills/materializecss
 ```
 
 Or clone anywhere and symlink:
 
 ```bash
-ln -s /path/to/materializecss-skill ~/.claude/skills/materializecss
+git clone https://github.com/kekefreedog/sKill_materializecss.git
+ln -s "$PWD/sKill_materializecss" ~/.claude/skills/materializecss
 ```
 
-The directory name must be `materializecss` to match the `name:` in the frontmatter.
+SSH instead of HTTPS:
+
+```bash
+git clone git@github.com:kekefreedog/sKill_materializecss.git ~/.claude/skills/materializecss
+```
+
+The repository name doesn't matter — what Claude Code reads is the `name:` field in `SKILL.md` frontmatter, which is `materializecss`. Cloning into a directory of the same name keeps the two aligned, which is the convention across Anthropic's own skills and the least surprising setup.
+
+Verify it landed:
+
+```bash
+head -2 ~/.claude/skills/materializecss/SKILL.md   # -> name: materializecss
+```
 
 ## Contents
 
