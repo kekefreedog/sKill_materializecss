@@ -38,7 +38,7 @@ Every one of these looks correct and does nothing:
 
 - **`.col` doesn't exist.** `.row` is CSS Grid; span classes go directly on the child.
 - **`M.Modal` is a dead stub** — `open()` is `return this`. Use native `<dialog>` + `.showModal()`.
-- **Pickers don't pop up without `displayPlugin: 'modal'`** — the calendar renders inline instead.
+- **Pickers don't pop up without `displayPlugin: 'docked'`** — the calendar renders inline instead.
 - **`<select>` must not be wrapped in `.input-field`** — `FormSelect` generates its own.
 - **`placeholder=" "` is required** or the floating label sticks in the raised position.
 - **`.right` is inert in a navbar** — `.nav-wrapper` is flex, so floats do nothing. Use `ml-auto`.
@@ -47,12 +47,13 @@ Every one of these looks correct and does nothing:
 
 ## Known upstream bugs
 
-`assets/materialize-v2-fixes.css` patches two confirmed defects in stock 2.3.3:
+`assets/materialize-v2-fixes.css` patches three confirmed defects in stock 2.3.3:
 
 1. **Checkbox labels sit flush against the box.** `_checkboxes.scss` opens a block comment at line 89 that is never closed, so the label-spacing rule never compiles — the stray `/*` even survives into `dist/css/materialize.css`.
 2. **The chips input renders as a full-width bordered field.** `chips.css` misspells its selector as `.chis` instead of `.chips`, and the typo ships in `dist`.
+3. **`displayPlugin: 'modal'` renders the picker below the page.** `ModalDisplayPlugin.show()` sets the `open` attribute instead of calling `dialog.showModal()`, so the dialog never enters the top layer and lands at its static position at the end of `<body>`. Prefer `displayPlugin: 'docked'`.
 
-Both are reported with source line references in `references/forms.md`.
+All three are reported with source line references in `references/forms.md`.
 
 ## Verifying
 

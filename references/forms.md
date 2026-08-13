@@ -401,7 +401,7 @@ Methods: `addChip(data)`, `selectChip(index)`, `getData()`, `destroy()`.
 
 ```ts
 M.Datepicker.init(document.querySelector('.datepicker')!, {
-  displayPlugin: 'modal',
+  displayPlugin: 'docked',
   format: 'yyyy-mm-dd',
   firstDay: 1,
   minDate: new Date(2026, 0, 1),
@@ -472,7 +472,7 @@ M.Datepicker.init(startEl, { isDateRange: true, dateRangeEndEl: '#end' });
 
 ```ts
 M.Timepicker.init(document.querySelector('.timepicker')!, {
-  displayPlugin: 'modal',
+  displayPlugin: 'docked',
   twelveHour: false,
   defaultTime: '09:30',
   onSelect: (hour, minute) => console.log(hour, minute)
@@ -490,15 +490,15 @@ M.Timepicker.init(document.querySelector('.timepicker')!, {
 
 It gets worse inside a grid: the container is inserted as a sibling of the field wrapper, which makes it a direct child of `.row`. With no span class it takes `grid-column: auto` — a single 1/12 track — and collapses into an unusable sliver.
 
-Always pass a plugin:
+**Use `'docked'`.** It wraps the calendar in a `.display-docked` element (`position: absolute; z-index: 9999`) inside the field wrapper and, on click, positions it directly beneath the input via `Utils._setAbsolutePosition(el, container, 'bottom', …)` — the behaviour people expect from a date field.
 
 ```ts
 M.Datepicker.init(document.querySelectorAll('.datepicker'), {
-  displayPlugin: 'modal'   // or 'docked'
+  displayPlugin: 'docked'
 });
 
 M.Timepicker.init(document.querySelectorAll('.timepicker'), {
-  displayPlugin: 'modal'
+  displayPlugin: 'docked'
 });
 ```
 
@@ -506,10 +506,16 @@ M.Timepicker.init(document.querySelectorAll('.timepicker'), {
 
 ```ts
 M.AutoInit(document.body, {
-  Datepicker: { displayPlugin: 'modal' },
-  Timepicker: { displayPlugin: 'modal' }
+  Datepicker: { displayPlugin: 'docked' },
+  Timepicker: { displayPlugin: 'docked' }
 });
 ```
+
+Because `.display-docked` is absolutely positioned, its offset parent must be positioned. `fieldset.form-field` and `div.input-field` are both `position: relative`, and neither clips overflow, so it works in either wrapper.
+
+> **`'modal'` is broken in 2.3.3.** `ModalDisplayPlugin.show()` sets the `open` **attribute** instead of calling `dialog.showModal()`, so the `<dialog>` never enters the top layer. `.modal` declares no `position`, so the UA default `position: absolute` applies — and since the plugin appends the dialog to `document.body`, the picker renders at its static position **below all page content** rather than over it. It looks like the picker simply didn't open.
+>
+> `assets/materialize-v2-fixes.css` contains a `.modal.display-modal[open]` centering rule if you need the modal presentation. Otherwise prefer `'docked'`.
 
 `displayPluginOptions` is forwarded to the chosen plugin. `'modal'` additionally moves the picker's footer into the modal chrome.
 

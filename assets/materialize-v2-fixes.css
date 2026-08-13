@@ -60,3 +60,26 @@ input[type='checkbox'] + span:not(.lever) {
   border: 0;
   box-shadow: none;
 }
+
+/* ------------------------------------------------------------------
+ * 3. `displayPlugin: 'modal'` renders the picker at the bottom of the page.
+ *
+ * ModalDisplayPlugin.show() sets the `open` ATTRIBUTE
+ * (src/modalDisplayPlugin.ts) rather than calling dialog.showModal(), so
+ * the <dialog> never enters the top layer. `.modal` sets no `position`,
+ * so the UA default `position: absolute` applies — and because the plugin
+ * appends the dialog to document.body, it lands at its static position
+ * below all page content instead of over it.
+ *
+ * Prefer `displayPlugin: 'docked'` for date/time fields, which positions
+ * the picker directly beneath the input. Load this block only if you
+ * specifically want the modal presentation.
+ * ------------------------------------------------------------------ */
+.modal.display-modal[open] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  margin: 0;
+}

@@ -188,7 +188,7 @@ Each of these fails **silently** — the markup looks correct and simply does no
 | `<input id="x">` in a field wrapper | `<input id="x" placeholder=" ">` | Without it the label is stuck floated over an empty field |
 | `<ul class="right">` in a navbar | `<ul class="ml-auto">` | `.nav-wrapper` is flex; `float` is inert on flex items |
 | Bare `<a>` in `.nav-wrapper` | `<ul><li><a>…</a></li></ul>` | Only `ul > li > a` gets colour and spacing |
-| `M.Datepicker.init(el)` | `…init(el, { displayPlugin: 'modal' })` | Without it the calendar renders inline and never pops up |
+| `M.Datepicker.init(el)` | `…init(el, { displayPlugin: 'docked' })` | Without it the calendar renders inline and never pops up |
 
 **Two form controls are broken in stock 2.3.3** by upstream CSS defects that markup cannot work around: checkbox/radio label text sits flush against the box, and the chips input renders as a full-width bordered field (the stylesheet misspells `.chips` as `.chis`). Load the shim after `materialize.css`:
 
