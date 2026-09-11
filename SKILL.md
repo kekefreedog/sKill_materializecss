@@ -1,11 +1,19 @@
 ---
 name: materializecss
-description: Build user interfaces with MaterializeCSS v2.3.3 using TypeScript or vanilla JavaScript. Use when writing Materialize markup, working with the .row/.s12 CSS grid, Material Design 3 colour tokens or dark mode, or components such as sidenav, dropdown, tabs, collapsible, carousel, datepicker, chips, toasts and form fields.
+description: Build MaterializeCSS v2 and kmaterialize interfaces using TypeScript or vanilla JavaScript. Use for Materialize grid, MD3 theming, components and forms, including kmaterialize Kanban, organization charts, enhanced inputs, toolbars and reactive web components.
 ---
 
-# MaterializeCSS v2.3.3
+# MaterializeCSS v2 and kmaterialize
 
-UI toolkit for Material Design 3. This skill targets **v2.3.3** (`@materializecss/materialize`, MIT).
+UI toolkit for Material Design 3. Covers stock **v2.3.3** (`@materializecss/materialize`) and the **kmaterialize** fork (MIT).
+
+## Select the package first
+
+Check the project's package manifest, lockfile and stylesheet imports. Both packages report `2.3.3`; the version alone does not identify the feature set. Preserve the project's chosen package.
+
+For `kmaterialize`, read [references/kmaterialize.md](references/kmaterialize.md) first: it overrides the stock setup, palette and initialization guidance below. Read [references/kmaterialize-forms.md](references/kmaterialize-forms.md) for enhanced inputs and [references/kmaterialize-extensions.md](references/kmaterialize-extensions.md) for organization charts, expressive buttons, lists and web components. These additions were verified against local kmaterialize commit `f517de18` (2026-09-11); check the installed build before using them in an older release.
+
+The remaining sections document the shared v2 foundation and **stock-package** behavior unless explicitly qualified.
 
 > **v2 is not v1.** Most Materialize content online documents v1.0.0 (Dogfalo, jQuery-era) and its markup **fails silently** in v2 — no error, the element just doesn't work. If you are reading or porting v1 code, see `references/v1-migration.md`.
 
@@ -14,9 +22,9 @@ UI toolkit for Material Design 3. This skill targets **v2.3.3** (`@materializecs
 1. **Never use jQuery.** No `$(...)`, no `jQuery`, no `cash-dom`, no plugin-style calls like `$('.modal').modal()`. v2 has no jQuery integration whatsoever. Use `M.Component.init()` or the ESM imports.
 2. **TypeScript or vanilla JavaScript only.**
 3. **Scope is UI.** Markup, styling, layout, theming, component behaviour.
-4. **Never invent class names.** Every class must exist in `dist/css/materialize.css`. Verify with `scripts/verify-classes.mjs`.
+4. **Verify framework class names** against the chosen package’s `dist/css/materialize.css` and JavaScript selectors. Application-defined classes are allowed when their styles or behavior are supplied. Use `scripts/verify-classes.mjs --css <installed-materialize.css>`; it checks framework markup, not arbitrary application classes.
 
-## Setup
+## Stock package setup
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.3.3/dist/css/materialize.min.css">
@@ -28,7 +36,7 @@ UI toolkit for Material Design 3. This skill targets **v2.3.3** (`@materializecs
 
 The browser build is an IIFE exposing the global **`M`**.
 
-Legacy colour classes (`.red`, `.blue.darken-2`, `.teal-text`) live in a **separate** stylesheet and are absent unless you add it:
+In stock Materialize, legacy colour classes (`.red`, `.blue.darken-2`, `.teal-text`) live in a **separate** stylesheet and are absent unless you add it:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize@2.3.3/dist/css/materialize.colors.min.css">
@@ -152,7 +160,7 @@ instance.open();
 instance.destroy();
 ```
 
-Every component extends a common base: `static init(els, options)`, `static getInstance(el)`, `static get defaults`, and `destroy()`. Re-initializing an element automatically destroys the previous instance first.
+Most element components extend a common base (the fork’s `Popup`, `OrgChart`, helpers and web components have separate APIs): `static init(els, options)`, `static getInstance(el)`, `static get defaults`, and `destroy()`. Re-initializing an element automatically destroys the previous instance first.
 
 ## Components
 
@@ -190,7 +198,7 @@ Each of these fails **silently** — the markup looks correct and simply does no
 | Bare `<a>` in `.nav-wrapper` | `<ul><li><a>…</a></li></ul>` | Only `ul > li > a` gets colour and spacing |
 | `M.Datepicker.init(el)` | `…init(el, { displayPlugin: 'docked' })` | Without it the calendar renders inline and never pops up |
 
-**Two form controls are broken in stock 2.3.3** by upstream CSS defects that markup cannot work around: checkbox/radio label text sits flush against the box, and the chips input renders as a full-width bordered field (the stylesheet misspells `.chips` as `.chis`). Load the shim after `materialize.css`:
+**Stock-package shim only:** do not automatically load this asset for kmaterialize; check the fork’s rendered controls first. **Two form controls are broken in stock 2.3.3** by upstream CSS defects that markup cannot work around: checkbox/radio label text sits flush against the box, and the chips input renders as a full-width bordered field (the stylesheet misspells `.chips` as `.chis`). Load the shim after `materialize.css`:
 
 ```html
 <link rel="stylesheet" href="assets/materialize-v2-fixes.css">
@@ -223,6 +231,9 @@ Styling hooks are `.modal[open]` and `.modal::backdrop`.
 
 | File | Contents |
 |---|---|
+| `references/kmaterialize.md` | Fork setup, AutoInit additions, alerts, loading, popup, toolbar, Kanban and utilities |
+| `references/kmaterialize-forms.md` | Optional peers, async enhanced inputs and numeric controls |
+| `references/kmaterialize-extensions.md` | OrgChart, reusable helpers, Tippy and reactive web components |
 | `references/layout-theming.md` | Grid, breakpoints, colour tokens, dark mode, typography, spacing, elevation, helpers |
 | `references/components.md` | Per-component markup, init, options and methods |
 | `references/forms.md` | Form fields, inputs, select, checkbox/radio/switch, range, autocomplete, chips, pickers |
@@ -234,4 +245,4 @@ Styling hooks are `.modal[open]` and `.modal::backdrop`.
 
 ## CrazyPHP projects
 
-If the project is a **CrazyPHP** app (`kzarshenas/crazyphp`), read `references/crazyphp-integration.md` before touching styles. In short: it pins Materialize on the v2 line, so everything above applies — but third-party widgets are restyled through per-page `enhancement/<library>_materializecss.scss` files with their own conventions. Add to that layer rather than patching global CSS.
+If the project is a **CrazyPHP** app (`kzarshenas/crazyphp`), read `references/crazyphp-integration.md` before touching styles. Check whether the app uses stock Materialize or kmaterialize; third-party widgets are restyled through per-page `enhancement/<library>_materializecss.scss` files with their own conventions. Add to that layer rather than patching global CSS.

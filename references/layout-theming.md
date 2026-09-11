@@ -1,5 +1,7 @@
 # Layout & Theming — Materialize v2.3.3
 
+This reference describes stock Materialize v2. For the kmaterialize fork, apply [kmaterialize.md](kmaterialize.md) first; enhanced forms and reusable extensions have dedicated references linked there.
+
 All classes here are verified present in `dist/css/materialize.css`.
 
 ## Grid

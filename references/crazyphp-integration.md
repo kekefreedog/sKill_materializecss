@@ -2,7 +2,7 @@
 
 Applies when the project is a **CrazyPHP** app (`kzarshenas/crazyphp`). Reference implementation: `rodeo_toolkit_2`.
 
-CrazyPHP apps pin `@materializecss/materialize` on the **v2 line** (`^2.3.2`, resolving to 2.3.3), so everything else in this skill applies unchanged — v2 grid, MD3 tokens, native `<dialog>`, no jQuery.
+The original reference app used `@materializecss/materialize` on the v2 line. Inspect the actual app manifest: projects using `kmaterialize` should read [kmaterialize.md](kmaterialize.md). The fork already incorporates several CrazyPHP input wrappers and style utilities; reuse those before duplicating their initialization or enhancement styles. The v2 grid, MD3 tokens, native `<dialog>` and no-jQuery guidance still apply.
 
 ## Stylesheet architecture
 

@@ -1,5 +1,7 @@
 # TypeScript & JavaScript — Materialize v2.3.3
 
+This reference describes stock Materialize v2. For the kmaterialize fork, apply [kmaterialize.md](kmaterialize.md) first; enhanced forms and reusable extensions have dedicated references linked there.
+
 Materialize v2 is written in TypeScript and ships `dist/js/materialize.d.ts`. There is **no jQuery integration** — none of the `$('.x').plugin()` forms exist.
 
 ## Installation and entry points

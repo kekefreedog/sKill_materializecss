@@ -1,5 +1,7 @@
 # v1 → v2 Migration
 
+This reference describes stock Materialize v2. For the kmaterialize fork, apply [kmaterialize.md](kmaterialize.md) first; enhanced forms and reusable extensions have dedicated references linked there.
+
 Most Materialize content in the wild — tutorials, Stack Overflow answers, admin templates — documents **v1.0.0** (Dogfalo, jQuery-era). This file exists so you can *recognize and convert* v1 code. **Never emit v1 markup or jQuery.**
 
 Almost every difference below fails **silently**: no console error, the element simply renders unstyled or does nothing.

@@ -1,5 +1,7 @@
 # Forms — Materialize v2.3.3
 
+This reference describes stock Materialize v2. For the kmaterialize fork, apply [kmaterialize.md](kmaterialize.md) first; enhanced forms and reusable extensions have dedicated references linked there.
+
 > **Load `assets/materialize-v2-fixes.css` after `materialize.css`.** Two form controls are visibly broken in stock 2.3.3 by upstream defects that markup cannot work around — see [Known upstream bugs](#known-upstream-bugs) at the end of this file.
 
 `Forms`, `Chips` and `Range` **self-initialize** when the script loads. Text fields, textareas and range sliders need no init call. Only `FormSelect`, `Autocomplete`, `Datepicker` and `Timepicker` need initializing (and `M.AutoInit()` covers all four).

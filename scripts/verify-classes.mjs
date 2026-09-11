@@ -40,6 +40,7 @@ const JS_ONLY = new Set([
   'sidenav-trigger',
   'timepicker',
   'tooltipped',
+  'tomselected',
   'validate',
   'waves-circle',
   'waves-effect',
@@ -76,6 +77,8 @@ function forbiddenReason(cls) {
 
 /** Candidate locations for the compiled stylesheet, tried in order. */
 const CSS_CANDIDATES = [
+  'node_modules/kmaterialize/dist/css/materialize.css',
+  '../node_modules/kmaterialize/dist/css/materialize.css',
   'node_modules/@materializecss/materialize/dist/css/materialize.css',
   '../node_modules/@materializecss/materialize/dist/css/materialize.css',
   '../src/materialize-main/dist/css/materialize.css',
@@ -105,8 +108,10 @@ function findStylesheet(explicit) {
     return resolve(explicit);
   }
   for (const rel of CSS_CANDIDATES) {
-    const candidate = resolve(SKILL_ROOT, rel);
-    if (existsSync(candidate)) return candidate;
+    for (const base of [process.cwd(), SKILL_ROOT]) {
+      const candidate = resolve(base, rel);
+      if (existsSync(candidate)) return candidate;
+    }
   }
   return null;
 }
@@ -239,7 +244,7 @@ function main() {
           continue;
         }
         if (known.has(cls) || JS_ONLY.has(cls)) continue;
-        problems.push({ file, line, cls, reason: 'not defined in v2' });
+        problems.push({ file, line, cls, reason: 'not defined in the selected stylesheet or known JS hooks' });
       }
     }
   }

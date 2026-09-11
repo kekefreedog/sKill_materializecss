@@ -1,6 +1,8 @@
-# MaterializeCSS v2 — Claude Code Skill
+# MaterializeCSS v2 and kmaterialize — Agent Skill
 
-A [Claude Code](https://claude.com/claude-code) skill for building UIs with **MaterializeCSS v2.3.3** (`@materializecss/materialize`) using TypeScript or vanilla JavaScript.
+A skill for building UIs with **MaterializeCSS v2.3.3** and the **kmaterialize** fork using TypeScript or vanilla JavaScript, usable in Codex and Claude Code.
+
+The fork references cover Kanban and organization charts, alerts/loading/popups, toolbars, optional enhanced inputs, numeric step controls, expressive buttons, lists, Tippy and reactive web components. Start with [the package selection guidance](SKILL.md#select-the-package-first): both packages use version 2.3.3 but expose different features.
 
 Most Materialize material online documents **v1.0.0** — the jQuery era. v2 changed the grid to CSS Grid, moved theming to Material Design 3 tokens, dropped jQuery entirely, and turned modals into native `<dialog>`. Crucially, v1 markup **fails silently** in v2: no console error, the element just renders unstyled or does nothing. This skill exists so an agent writes v2 that actually works.
 

@@ -1,5 +1,7 @@
 # Components — Materialize v2.3.3
 
+This reference describes stock Materialize v2. For the kmaterialize fork, apply [kmaterialize.md](kmaterialize.md) first; enhanced forms and reusable extensions have dedicated references linked there.
+
 Every class here exists in `dist/css/materialize.css`; every option and default is taken from the component's `_defaults` in the v2 TypeScript source. Form controls live in `forms.md`.
 
 **Common API.** Each component extends a shared base:
