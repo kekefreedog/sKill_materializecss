@@ -47,7 +47,7 @@ const snapshot = chart.getData();
 // chart.setData(nextData); chart.resetZoom(); chart.destroy();
 ```
 
-Team IDs and person IDs identify endpoints; use valid `teamId` relationships. Links default to person endpoints, or set `fromType` / `toType` to `person` or `team`. Options include `minZoom`, `maxZoom`, `onZoomChange`; editable link labels are opt-in. Teams/people accept `color`, `textColor`, `borderColor`, `accent`, `accentPosition` (`top/right/bottom/left`).
+Team IDs and person IDs identify endpoints; use valid `teamId` relationships. Links default to person endpoints, or set `fromType` / `toType` to `person` or `team`. Options include `minZoom`, `maxZoom`, `onZoomChange`, `draggableTeams`, and `draggablePeople`; the separate movement flags override `draggable`. `connectable` defaults to true independently of movement, while editable link labels are opt-in. Team positions may omit x/y and use framework defaults. Teams/people accept `color`, `textColor`, `borderColor`, `accent`, `accentPosition` (`top/right/bottom/left`).
 
 `getData()` returns a copy; update through `setData()`. Interactive connections dispatch cancelable `orgconnect` before insertion. `exportPdf(title?, { theme: 'light' | 'dark' })` opens a browser print preview for saving as PDF, not a PDF byte stream. Invoke directly from a user click so the preview window can open; it preserves the live chart's theme and zoom.
 

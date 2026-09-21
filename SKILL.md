@@ -1,6 +1,6 @@
 ---
 name: materializecss
-description: Build MaterializeCSS v2 and kmaterialize interfaces using TypeScript or vanilla JavaScript. Use for Materialize grid, MD3 theming, components and forms, including kmaterialize Kanban, organization charts, enhanced inputs, toolbars and reactive web components.
+description: Build MaterializeCSS v2 and kmaterialize interfaces using TypeScript or vanilla JavaScript. Use for Materialize grid, MD3 theming, components and forms, including kmaterialize scheduling, interactive popups, editors, enhanced inputs and reactive web components.
 ---
 
 # MaterializeCSS v2 and kmaterialize
@@ -9,9 +9,9 @@ UI toolkit for Material Design 3. Covers stock **v2.3.3** (`@materializecss/mate
 
 ## Select the package first
 
-Check the project's package manifest, lockfile and stylesheet imports. Both packages report `2.3.3`; the version alone does not identify the feature set. Preserve the project's chosen package.
+Check the project's package manifest, lockfile and stylesheet imports. The fork source may still report upstream version `2.3.3`, while fork releases use tags such as `2.3.3-1.0.33`; identify the package by name and installed capabilities. Preserve the project's chosen package.
 
-For `kmaterialize`, read [references/kmaterialize.md](references/kmaterialize.md) first: it overrides the stock setup, palette and initialization guidance below. Read [references/kmaterialize-forms.md](references/kmaterialize-forms.md) for enhanced inputs and [references/kmaterialize-extensions.md](references/kmaterialize-extensions.md) for organization charts, expressive buttons, lists and web components. These additions were verified against local kmaterialize commit `f517de18` (2026-09-11); check the installed build before using them in an older release.
+For `kmaterialize`, read [references/kmaterialize.md](references/kmaterialize.md) first: it overrides the stock setup, palette and initialization guidance below. Read [references/kmaterialize-forms.md](references/kmaterialize-forms.md) for enhanced inputs and [references/kmaterialize-extensions.md](references/kmaterialize-extensions.md) for organization charts, expressive buttons, lists and web components. For Gantt, async/interactive Popup steps and Editor, read [references/kmaterialize-workflows.md](references/kmaterialize-workflows.md). For navbar variants, cards, timelines and footers, read [references/kmaterialize-layouts.md](references/kmaterialize-layouts.md). The fork reference records the 2026-09-22 source check and distinguishes released features from the local interactive-stepper addition; verify the installed build before using newer APIs.
 
 The remaining sections document the shared v2 foundation and **stock-package** behavior unless explicitly qualified.
 
@@ -234,6 +234,8 @@ Styling hooks are `.modal[open]` and `.modal::backdrop`.
 | `references/kmaterialize.md` | Fork setup, AutoInit additions, alerts, loading, popup, toolbar, Kanban and utilities |
 | `references/kmaterialize-forms.md` | Optional peers, async enhanced inputs and numeric controls |
 | `references/kmaterialize-extensions.md` | OrgChart, reusable helpers, Tippy and reactive web components |
+| `references/kmaterialize-workflows.md` | Gantt dependencies/progress/selection, Popup steps and custom input, editors |
+| `references/kmaterialize-layouts.md` | Navbar variants, cards/badges/gradients, timeline, footer layouts |
 | `references/layout-theming.md` | Grid, breakpoints, colour tokens, dark mode, typography, spacing, elevation, helpers |
 | `references/components.md` | Per-component markup, init, options and methods |
 | `references/forms.md` | Form fields, inputs, select, checkbox/radio/switch, range, autocomplete, chips, pickers |

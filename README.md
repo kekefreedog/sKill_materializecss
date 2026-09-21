@@ -2,7 +2,7 @@
 
 A skill for building UIs with **MaterializeCSS v2.3.3** and the **kmaterialize** fork using TypeScript or vanilla JavaScript, usable in Codex and Claude Code.
 
-The fork references cover Kanban and organization charts, alerts/loading/popups, toolbars, optional enhanced inputs, numeric step controls, expressive buttons, lists, Tippy and reactive web components. Start with [the package selection guidance](SKILL.md#select-the-package-first): both packages use version 2.3.3 but expose different features.
+The fork references cover Gantt scheduling, interactive popup steps, Handlebars/spreadsheet editors, navbar variants, cards, timelines, footers, enhanced inputs, Kanban, organization charts and reactive web components. Start with [the package selection guidance](SKILL.md#select-the-package-first): the fork source version and published fork tags do not identify stock Materialize features. The references distinguish the verified release baseline from local additions.
 
 Most Materialize material online documents **v1.0.0** — the jQuery era. v2 changed the grid to CSS Grid, moved theming to Material Design 3 tokens, dropped jQuery entirely, and turned modals into native `<dialog>`. Crucially, v1 markup **fails silently** in v2: no console error, the element just renders unstyled or does nothing. This skill exists so an agent writes v2 that actually works.
 
@@ -40,6 +40,11 @@ head -2 ~/.claude/skills/materializecss/SKILL.md   # -> name: materializecss
 | File | Contents |
 |---|---|
 | `SKILL.md` | Setup, grid, theming, init API, component index, gotchas |
+| `references/kmaterialize.md` | Fork setup, verification boundary and AutoInit additions |
+| `references/kmaterialize-workflows.md` | Gantt, interactive Popup steps and Editor |
+| `references/kmaterialize-layouts.md` | Navigation, cards, timelines and footers |
+| `references/kmaterialize-forms.md` | Optional peers, enhanced inputs, OTP, masking and rich text |
+| `references/kmaterialize-extensions.md` | Org charts, buttons, lists, tooltips and web components |
 | `references/layout-theming.md` | Grid, breakpoints, MD3 tokens, dark mode, typography, spacing, helpers |
 | `references/components.md` | Per-component markup, init, options and methods |
 | `references/forms.md` | Form fields, inputs, select, pickers, chips, validation |

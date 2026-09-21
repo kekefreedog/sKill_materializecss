@@ -72,3 +72,50 @@ These selectors work through `AutoInit`; do not also manually initialize them un
 - **Air Datepicker:** don't add stock `.datepicker` to the same input. Supports `data-date-range="true"` (or `multiple`), `data-date-timepicker`, `data-date-time-format`, `data-date-auto-close`, `data-date-view`, `data-date-min-view`, `data-date-mobile`, `data-date-position`, `data-date-buttons`. Date language uses `fr-FR`, unlike Pickr's `fr-fr`; explicit `locale` is also accepted.
 - **FilePond:** initialize the `.file-field` wrapper, not its input. Plugin names: `image-preview`, `file-validate-type`, `image-exif-orientation`; install the corresponding `filepond-plugin-*` packages and any required CSS. `accept` automatically requests the validate-type plugin. Input attributes/dataset configure `multiple`, default file, max files, labels, preview/layout and instant upload. The wrapper does not define your server upload endpoint; configure the underlying pond through its API as needed.
 - **Tom Select:** `.tomselected` excludes the input from FormSelect. `data-select-tag` enables creation; `data-select-clear` enables clearing. Remote data uses `remote: { url, value, label, search?, dataKey? }` or JSON `data-select-remote`; `settings` accepts Tom Select settings. `data-depends` identifies another element with a CSS selector. Keep app-specific remote contracts explicit rather than inventing endpoint shapes.
+
+## Maskito and OTP inputs
+
+`MaskitoInput` uses `@maskito/core`; number/date/time presets additionally use `@maskito/kit`. It supports native text/tel/search/url/password inputs, not `type="number"`; choose `inputmode` for the mobile keyboard. Keep only one masking engine on an input. AutoInit recognizes `input[data-maskito]:not([data-otp])`.
+
+```ts
+import { MaskitoInput, OtpInput } from 'kmaterialize';
+const code = MaskitoInput.init(document.querySelector<HTMLInputElement>('#reference')!, {
+  pattern: 'AA-####'
+});
+await code.ready;
+await code.setValue('AB1234');
+
+const otp = OtpInput.init(document.querySelector<HTMLInputElement>('#verification')!, {
+  length: 6,
+  groupSize: 3,
+  onComplete: value => { /* submit only through the application's chosen flow */ }
+});
+await otp.ready;
+```
+
+Use `.no-autoinit` on explicitly initialized inputs when their opt-in data attributes are also present. Pattern tokens: `#` digit, `A` ASCII letter, `*` alphanumeric; backslash escapes a literal. `MaskitoInput` accepts `preset: 'pattern' | 'number' | 'date' | 'time'`, the corresponding kit options and `maskOptions`. `getValue()` returns the formatted native string; `setValue(value, emit?)` and `refresh()` are async. Use kit parsers for typed numeric/date values.
+
+`OtpInput` enhances one accessible native input into visual slots; do not replace it with unrelated inputs per digit. AutoInit selector: `input[data-otp]`. It uses Maskito core, supports `length` 1–32 (default 6), `characters: 'digits' | 'alphanumeric'`, `pattern`, `groupSize`, `masked`, and `onComplete(value, instance)`. A supplied pattern owns the mask and infers its editable length; explicit length must agree. `groupSize` is only visual; literal pattern separators remain in the native value. Methods: `getValue()`, `getUnmaskedValue()` (editable characters only), `isComplete()`, async `setValue(value, emit?)` / `clear(emit?)`, and `destroy()`. Submission still uses the original input/name.
+
+## Rich textarea
+
+`RichTextarea` enhances `textarea[data-editor="quill"]`; install `quill` and load its CSS before Materialize. Initialize explicitly for readiness/error handling:
+
+```ts
+import { RichTextarea } from 'kmaterialize';
+const notes = RichTextarea.init(document.querySelector<HTMLTextAreaElement>('#notes')!, {
+  valueFormat: 'html',
+  placeholder: 'Add review notes'
+});
+await notes.ready;
+notes.setValue('<p>Ready for review.</p>');
+const value = notes.getValue();
+```
+
+`valueFormat` is `html` by default or `text`; `toolbar`, `formats`, `label` and `placeholder` configure the wrapper. The hidden original textarea stays synchronized for form submission, reset and validation. `quill` is available after `ready`. Treat generated rich HTML according to the application's rendering/sanitization boundary. Destroy on unmount.
+
+## Outlined fields and input actions
+
+Current kmaterialize provides real outline notches over solid/gradient/image surfaces, native Materialize checkbox styling, and corrected select/dropdown ownership. Do not load the stock v2 workaround stylesheet automatically into the fork. For an input copy action, place a `button.suffix.input-copy-button[data-copy-target="#input-id"]` inside `.input-field`; use `type="button"`, an accessible label and a unique target ID. The framework handles dynamically inserted copy controls.
+
+Sources for these additions: `components/{maskito-input,otp-input,rich-textarea,checkbox}/`, field styles and forms initialization. Verify option names in installed declarations before using later builds.

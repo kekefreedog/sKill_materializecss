@@ -1,6 +1,17 @@
 # kmaterialize fork
 
-Verified against local `kmaterialize` commit `f517de18`, package version `2.3.3`, on 2026-09-11. Sources: `package.json`, `src/index.ts`, `components/` TypeScript and `sass/materialize.scss`. This documents that checkout, not a claim that every published 2.3.3 package has these additions.
+Verified on **2026-09-22** against the local framework at commit `c7f537c9` (release tag `2.3.3-1.0.33`) plus its current interactive-stepper working-tree changes. Sources: `package.json`, `src/index.ts`, component TypeScript/SCSS and generated `dist` declarations/CSS. The source package still reports upstream version `2.3.3`; that number alone does not establish fork features.
+
+Gantt, navbar variants, card/timeline/footer enhancements, Editor and Popup fill layouts are present in the tagged baseline. **`PopupStepContext.waitForConfirmation` and `PopupStepConfirmationOptions` are local additions after that tag, not claimed to be available in `2.3.3-1.0.33`.** Check installed types/source before using them. This is a verified snapshot, not an assertion about the latest npm dist-tag.
+
+Read only the reference needed for the task:
+
+- [Workflows](kmaterialize-workflows.md): Gantt dependency semantics, async and interactive Popup steps, tabs in popups, Handlebars/spreadsheet Editor.
+- [Layouts](kmaterialize-layouts.md): default/rounded/scrolling/tiny navbar, cards and badges, background gradients, timeline, pinned footer, existing component refinements.
+- [Forms](kmaterialize-forms.md): optional peers, OTP, Maskito, rich textarea and enhanced inputs.
+- [Extensions](kmaterialize-extensions.md): organization charts, buttons, lists, Tippy and web components.
+
+When working on kmaterialize and its docs, reusable behavior/styles belong in the framework; docs should demonstrate public APIs and use cases. Avoid implementing missing reusable components solely in a docs page.
 
 ## Setup and differences from stock
 
@@ -25,6 +36,12 @@ The stock AutoInit registry is extended with the following selectors, each exclu
 | Loading | `.loading` |
 | Alert | `.alert` |
 | Kanban | `.kanban-board` |
+| Gantt | `.gantt` |
+| NavbarAutoHide | `.navbar-hide-on-scroll` |
+| TinyNavbar | `.navbar-tiny` |
+| OtpInput | `input[data-otp]` |
+| MaskitoInput | `input[data-maskito]:not([data-otp])` |
+| RichTextarea | `textarea[data-editor="quill"]` |
 | Toolbar | `.toolbar:not(.fixed-action-btn)` |
 | PasswordInput | `input[data-password-toggle]` |
 | NumberInput | `input[data-type="number"]` |
@@ -35,7 +52,7 @@ The stock AutoInit registry is extended with the following selectors, each exclu
 
 `FormSelect` excludes `.tomselected` so both select wrappers never own the same element. AutoInit queries descendants, not the context element itself. It returns no promise: await individual enhanced input instances' `ready` when their peer APIs are needed. See [kmaterialize-forms.md](kmaterialize-forms.md).
 
-`Popup`, `OrgChart`, helper functions and custom element registration are outside AutoInit. Module-level `Chips.Init()` and `Cards.Init()` install shared behavior; this does not prohibit per-element `Chips.init()` / `Cards.init()` when needed.
+`Popup`, `OrgChart`, `Editor`, helper functions and custom element registration are outside AutoInit. Module-level `Chips.Init()` and `Cards.Init()` install shared behavior; this does not prohibit per-element `Chips.init()` / `Cards.init()` when needed.
 
 ## Alerts, loading and popups
 
@@ -69,7 +86,7 @@ const result = await Popup.fire({
 if (result.isConfirmed) { /* apply the requested changes */ }
 ```
 
-`PopupOptions` / `PopupResult` use SweetAlert2 types; `Popup.close()` is async. Default Materialize button classes can be customized, while `popup-container` / `popup` theme hooks are retained.
+`Popup.steps()` supports sequential work, retry and cancellation; the newer local `waitForConfirmation()` adds custom-input and result-confirmation steps. See [workflows](kmaterialize-workflows.md) for contracts and release requirements. `PopupOptions` / `PopupResult` use SweetAlert2 types; `Popup.close()` is async. Default Materialize button classes can be customized, while `popup-container` / `popup` theme hooks are retained.
 
 ## Toolbar
 
